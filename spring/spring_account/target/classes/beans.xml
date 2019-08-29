@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!-- 配置Service -->
+<bean id="accountService" class="cn.dave.service.imp.AccountServiceImpl">
+    <!--注入dao-->
+    <property name="accountDao" ref="accountDao"/>
+    <property name="transactionMange" ref="transactionMange"/>
+</bean>
+<!--配置dao-->
+<bean id="accountDao" class="cn.dave.dao.imp.AccountDaoImpl">
+    <property name="query" ref="query"/>
+    <property name="connectionUtils" ref="connectionUtils"/>
+</bean>
+<!--配置QueryRunner-->
+<bean id="query" class="org.apache.commons.dbutils.QueryRunner" scope="prototype">
+    <!--注入数据源-->
+    <!--<constructor-arg name="ds" ref="dataSource"/>-->
+</bean>
+<!--配置数据源-->
+<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+    <!--连接数据库的必备信息-->
+    <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+    <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/spring?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull&amp;useSSL=false&amp;serverTimezone=UTC"/>
+    <property name="user" value="root"/>
+    <property name="password" value="763081703"/>
+</bean>
+    <!--配置TransactionMange-->
+    <bean id="transactionMange" class="cn.dave.utils.TransactionMange">
+        <property name="connectionUtils" ref="connectionUtils"/>
+    </bean>
+    <!--配置ConnectionUtils-->
+    <bean id="connectionUtils" class="cn.dave.utils.ConnectionUtils">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+</beans>

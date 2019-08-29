@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- mybatis的主配置文件 -->
+<configuration>
+    <settings>
+        <!--开启Mybatis支持延迟加载-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+    <!--配置别名-->
+    <typeAliases>
+        <package name="cn.dave.domain"/>
+    </typeAliases>
+    <!--配置参数-->
+    <!-- 配置环境 -->
+    <environments default="mysql">
+        <!--配置mysql的环境-->
+        <environment id="mysql">
+            <transactionManager type="JDBC"></transactionManager>
+            <!--配置连接池-->
+            <dataSource type="POOLED">
+                <!--配置连接数据库的四个基本参数-->
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis?useUnicode=true&amp;characterEncoding=utf8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="763081703"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--指定配置文件的位置，配置文件指的是每个dao独立的配置文件-->
+    <mappers>
+        <package name="cn.dave.dao"/>
+    </mappers>
+</configuration>
